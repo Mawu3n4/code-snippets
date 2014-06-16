@@ -1,0 +1,1 @@
+solve = putStrLn ['a'..'z']
