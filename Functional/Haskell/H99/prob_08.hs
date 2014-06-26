@@ -1,8 +1,7 @@
-import Data.List
 
-compress xxs = (map head . group) xxs
-
--- Solution
-
--- compress :: Eq a => [a] -> [a]
--- compress = map head . group
+compress xxs = compress' xxs []
+  where
+    compress' (x:y:xs) compressed
+      | x == y = compress' (x:xs) compressed
+      | x == [] = compressed
+      | otherwise = compress' xs (compressed ++ x)
