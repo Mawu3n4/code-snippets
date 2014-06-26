@@ -1,7 +1,10 @@
 
-compress xxs = compress' xxs []
-  where
-    compress' (x:y:xs) compressed
-      | x == y = compress' (x:xs) compressed
-      | x == [] = compressed
-      | otherwise = compress' xs (compressed ++ x)
+import Data.List
+
+compress :: Eq a => [a] -> [a]          -- Explicit typing found on SO
+compress = map head . Data.List.group
+
+
+-- Solution
+
+-- Got it ! Yay
