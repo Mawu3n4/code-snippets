@@ -1,0 +1,3 @@
+[submodule "Mobile/Cordova/test-purchase/paypal-android-sdk"]
+	path = Mobile/Cordova/test-purchase/paypal-android-sdk
+	url = git@github.com:paypal/PayPal-Android-SDK.git
