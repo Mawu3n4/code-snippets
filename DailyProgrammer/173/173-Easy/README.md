@@ -4,7 +4,7 @@
 
 [Unit Calculator](http://www.reddit.com/r/dailyprogrammer/comments/2bxntq/7282014_challenge_173_easy_unit_calculator/)
 
-* Ensiss **KO**
+* Ensiss _OK_
 
 * gfauchart **KO**
 
