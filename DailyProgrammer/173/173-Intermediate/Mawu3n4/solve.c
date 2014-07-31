@@ -5,7 +5,7 @@
 ** Contact <contact@zackdibe.com>
 **
 ** Started on  Thu Jul 31 11:58:39 2014 zackaria dibe
-** Last update Thu Jul 31 14:21:14 2014 zackaria dibe
+** Last update Thu Jul 31 16:11:59 2014 zackaria dibe
 */
 
 #include <unistd.h>
@@ -91,17 +91,13 @@ ll_node *getColors() {
 void    moveAnt(t_map *map) {
   /* Get real pos within the nodes */
   int   pos = map->y_ant * HEIGHT + map->x_ant;
+
+  /* 0 North, 1 Est, 2 South, 3 West */
   int   dir = (4 + dir + map->nodes[pos]->dir) % 4;
 
-  /* To be changed */
-  if (!dir)
-    map->y_ant = (HEIGHT - 1 + map->y_ant) % HEIGHT;
-  else if (dir == 1)
-    map->x_ant = (WIDTH + 1 + map->x_ant) % WIDTH;
-  else if (dir == 2)
-    map->y_ant = (HEIGHT + 1 + map->y_ant) % HEIGHT;
-  else
-    map->x_ant = (WIDTH - 1 + map->x_ant) % WIDTH;
+  /* Clever and ugly */
+  map->y_ant = (HEIGHT + map->y_ant + (-1 + dir) % 2) % HEIGHT;
+  map->x_ant = (WIDTH + map->x_ant + (dir & 1) - 2 * (dir == 3)) % WIDTH;
 
   map->nodes[pos] = map->nodes[pos]->next;
 }
