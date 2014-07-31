@@ -1,4 +1,4 @@
-### 173
+## #173
 
 #### Easy
 
@@ -12,7 +12,7 @@
 
 #### Intermediate
 
-[Advanced Langton's Ant]http://www.reddit.com/r/dailyprogrammer/comments/2c4ka3/7302014_challenge_173_intermediate_advanced/)
+[Advanced Langton's Ant](http://www.reddit.com/r/dailyprogrammer/comments/2c4ka3/7302014_challenge_173_intermediate_advanced/)
 
 * Ensiss **KO**
 
