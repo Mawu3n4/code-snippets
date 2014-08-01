@@ -24,6 +24,7 @@ while not valid:
     elif not uinput[1] in units or not uinput[2] in units:
         print error.format("wrong units")
         print "Available units: " + " ".join([x for x in units])
+    # check that units types match
     elif units[uinput[1]][1] != units[uinput[2]][1]:
         print error.format("can't convert between units")
         print "You can convert between: " + " ".join([x for x in units if not units[x][1]])
