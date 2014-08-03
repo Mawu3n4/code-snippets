@@ -1,6 +1,28 @@
 # Credit to InkWellIdeas for the striked_pool and missed_pool
 
 import random
+import sys
+import time
+
+# Ressources
+text = {
+    'start': [
+        # Float%String
+        # Delay%Text to print
+        '0.06%You wake up in a cold grove, hungry but rested, where the dim light of the second moon reveals an hazardous path between the trees.\n',
+        '0.06%As you gather your strength to stand up, you lean on your rigth to pick up your ..',
+        # INPUT var_name
+        # Will get user input on stdin and send it to
+        # the class ctor with the name var_name
+        'INPUT weapon',
+        '0.06%A fine weapon that followed you everywhere, no other Mage, Warrior, Scout, or Archer can weild it like you do, you are the most talented ..',
+        'INPUT spec',
+        "0.048%You start walking at a slow pace towards the breach between nature's fingers when you realize the growing noise behind you.\n",
+        '0.08%The lull suddenly come back and fills the air, a sore iron smells sting your nose and you feel eyes on you.\n',
+        '0.04%The mightiest roar ripps the silence open and a beast of vaguely anthropoid outline, prodigious claws on hind and fore feet, and long, narrow wings behind, comes running at you.\n',
+        '0.05%After a brief moment of sheer terror, your senses come back and you start running for your life trough the breach you spotted before.\n',
+        '0.055%The branches of the narrow trees slap your face as you try to stay alive and two paths emerge before you.\n']
+        }
 
 striked_pool = {"You pierce the creatures armor/skin/scales.",
                 "Your attack rings true.",
@@ -68,12 +90,30 @@ rested_pool = {"You feel energy flow through your veins.",
                "You never felt so good before."}
 
 
+# Misc Func
+
+# Polymorphic function using a closure
 def getResultFromPool(pool):
     def getSentenceFromSet():
+        # access the global scope
         return random.sample(globals()[pool], 1)[0]
     return getSentenceFromSet
 
+
+# Templates in Python
 getStrikedSentence = getResultFromPool('striked_pool')
 getMissedSentence = getResultFromPool('missed_pool')
 getWalkedSentence = getResultFromPool('walked_pool')
 getRestedSentence = getResultFromPool('rested_pool')
+
+
+def printStrWithDelay(string, delay=0.06):
+    for char in string:
+        # print displays a ugly space after single char prints
+        sys.stdout.write(char)
+        # flush the buffer
+        sys.stdout.flush()
+        # Delay longer for punctuation, helps set the ambiance
+        time.sleep(0.3 if char == ','
+                   else 0.5 if char in {',', '.', '?', '!'}
+                   else delay)
