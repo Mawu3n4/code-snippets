@@ -1,13 +1,21 @@
 
 import library
-
+import random
 #TO-DO
 def teleport():
     return ""
 
 #TO-DO
-def genNewPath():
-    return ""
+def genNewPath(other_path={'length':0, 'obstacle': False, 'food': 0}):
+   return {
+       'length': abs(random.randrange(0,50,10) - other_path['length']),
+       'food': (random.randrange(0, 150, 20) if not other_path['food'] and
+                random.randrange(0,100,10) < 40 else 0),
+       'obstacle': (not random.randrange(0,3) if not other_path['obstacle']
+                    else False)
+           }
+
+
 
 
 # Peon: Peon
@@ -62,4 +70,22 @@ def initGame():
     print player.weapon
 
 
-initGame()
+def printPath(path, direction):
+    library.printStrWithDelay(
+        "The {3} path is {0} units long and {1} obstacles, there is also {2}food.\n".format(
+            path['length'], "contains" if path['obstacle'] else "is free of",
+            "" if path['food'] else "no ", direction))
+
+while True:
+    right = genNewPath()
+    left = genNewPath(right)
+
+    printPath(right, "right")
+    printPath(left, "left")
+    library.printStrWithDelay("Which path do you take ?.. [R/L]")
+
+    u_input = raw_input()
+    u_input = 'R' if not len(u_input) else u_input.capitalize()[0]
+
+    library.printStrWithDelay("You went " + ("right.\n" if u_input == 'R'
+                                             else "left.\n"))

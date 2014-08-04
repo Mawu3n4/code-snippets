@@ -18,9 +18,9 @@ text = {
         '0.06%A fine weapon that followed you everywhere, no other Mage, Warrior, Scout, or Archer can weild it like you do, you are the most talented ..',
         'INPUT spec',
         "0.048%You start walking at a slow pace towards the breach between nature's fingers when you realize the growing noise behind you.\n",
-        '0.08%The lull suddenly come back and fills the air, a sore iron smells sting your nose and you feel eyes on you.\n',
+        '0.08%The lull suddenly come back and fills the air, a sore iron smell sting your nose and you feel eyes on you.\n',
         '0.04%The mightiest roar ripps the silence open and a beast of vaguely anthropoid outline, prodigious claws on hind and fore feet, and long, narrow wings behind, comes running at you.\n',
-        '0.05%After a brief moment of sheer terror, your senses come back and you start running for your life trough the breach you spotted before.\n',
+        '0.05%After a brief moment of sheer terror, your senses come back and you start running for your life through the breach you spotted before.\n',
         '0.055%The branches of the narrow trees slap your face as you try to stay alive and two paths emerge before you.\n']
         }
 
