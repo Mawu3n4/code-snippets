@@ -4,7 +4,7 @@
 
 [Thue-Morse Sequence](http://www.reddit.com/r/dailyprogrammer/comments/2cld8m/8042014_challenge_174_easy_thuemorse_sequences/)
 
-* Ensiss **KO**
+* Ensiss _OK_
 
 * gfauchart **KO**
 
