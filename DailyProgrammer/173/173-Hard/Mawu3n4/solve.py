@@ -109,7 +109,8 @@ while True:
                                   + library.getWalkedSentence())
         player.stamina -= player.action_cost
 
-    library.printStrWithDelay(getPosMonsterSentence(monster['pos']))
+    library.printStrWithDelay(library.getPosMonsterSentence(
+            player.dist - monster['pos']))
 
     monster['pos'] += monster['speed']
 

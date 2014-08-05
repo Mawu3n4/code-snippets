@@ -89,8 +89,18 @@ rested_pool = {"You feel energy flow through your veins.\n",
                "A foe crossing your path right now would be a dead foe.\n",
                "You never felt so good before.\n"}
 
-
+monster_pos_pool = [
+    "You can't hear the growling of the beast anymore, it is not a good thing.\n",
+    "Leafs from shaking trees are paving your ways, it's coming for you.\n",
+    "You hear the spine of an animal getting crushed under its footsteps, run.\n",
+    "The smell of your fear and its breath is making you sick of terror, may the gods have mercy.\n"
+    ]
 # Misc Func
+
+def getPosMonsterSentence(distance):
+    distance /= 10
+    distance = 0 if distance > 200 else 1 if distance > 100 else 2 if distance > 50 else 3
+    return monster_pos_pool[distance]
 
 # Polymorphic function using a closure
 def getResultFromPool(pool):
