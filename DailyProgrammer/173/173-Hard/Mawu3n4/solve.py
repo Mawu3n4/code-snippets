@@ -84,9 +84,12 @@ monster = {
     'pos': 0,
     'speed': 10
     }
+paths = {}
 
 while True:
-    paths = {}
+    library.printStrWithDelay(("The branches of the narrow trees slap your \
+face as you try to stay alive and two paths emerge before you.\n"))
+
     paths['R'] = genNewPath()
     paths['L'] = genNewPath(paths['R'])
 
