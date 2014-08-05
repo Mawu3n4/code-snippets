@@ -103,18 +103,22 @@ face as you try to stay alive and two paths emerge before you.\n"))
     library.printStrWithDelay(
         "You went " + ("right.\n" if u_input == 'R' else "left.\n"))
 
+    # Update ressources
     player.dist += paths[u_input]['length']
     player.food += paths[u_input]['food']
     player.stamina -= (paths[u_input]['length'] % 10) / 2
 
+    # Cross obstacles
     if paths[u_input]['obstacle']:
         library.printStrWithDelay("Something blocks your way.\n"
                                   + library.getWalkedSentence())
         player.stamina -= player.action_cost
 
+    # Print msg depending on the pos of the monster
     library.printStrWithDelay(library.getPosMonsterSentence(
             player.dist - monster['pos']))
 
+    # Its coming
     monster['pos'] += monster['speed']
 
 ## TODO
