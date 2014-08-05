@@ -1,8 +1,11 @@
 #ifndef		__MAP_HH__
 #define		__MAP_HH__
 
+#include	<list>
 #include	<vector>
+#include	<algorithm>
 #include	<stdint.h>
+#include	<iostream>
 #include	<cstdio>
 #include	"Town.hh"
 
@@ -17,7 +20,9 @@ public:
   Town		**getTowns() { return (_towns); }
 
 private:
+  bool		_checkPath();
   void		_buildRoad(Town &a, Town &b);
+  void		_buildPath(int x, int y, int dir);
 
 private:
   Town		**_towns;
