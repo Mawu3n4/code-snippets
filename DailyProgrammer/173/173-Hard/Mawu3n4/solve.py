@@ -150,6 +150,7 @@ face as you try to stay alive and two paths emerge before you.\n"))
 
     # Its coming
     monster['pos'] += monster['speed']
+    # increase speed according to player.distance
     monster['speed'] += 20
 
     if monster['pos'] >= player.dist:
@@ -161,6 +162,7 @@ face as you try to stay alive and two paths emerge before you.\n"))
             player.checkStamina()
 
         library.printStrWithDelay(library.getStrikedSentence())
+        # Change distance according to player.distance
         monster['pos'] = player.dist - 20
         monster['attack'] += 15
         monster['speed'] = 20
@@ -173,7 +175,5 @@ face as you try to stay alive and two paths emerge before you.\n"))
     player.checkStamina()
 
 ## TODO
-#   Rest
 #   Combat
 #   Increase speed
-#   Powers
