@@ -29,6 +29,7 @@ Map::Map(uint8_t size)
       _buildPath(_size - 1, rand() % _size, 4);
     }
   while (!_checkPath());
+  _towns[0][0].visit();
 }
 
 Map::~Map()

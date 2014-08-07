@@ -5,7 +5,8 @@ RM=		@rm -f
 CXX=		g++
 
 SRC=		src/main.cpp		\
-		src/Map.cpp
+		src/Map.cpp		\
+		src/Interface.cpp
 
 OBJ=		$(SRC:.cpp=.o)
 
