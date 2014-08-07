@@ -20,9 +20,13 @@ def genSquare(color, seed, size):
         x = 0 if x >= img.size[0]/2 - size else x + size
         y = y + size if x == 0 else y
 
-color = sum([ord(c) for c in seed]) % 255
-genSquare((color, color, 0), seed, 40)
-genSquare((0, 255-color, 255-color), seed[::-1], 40)
+seed_len = len(seed)
+r = sum([ord(c) for c in seed[:seed_len/3]]) % 255
+g = sum([ord(c) for c in seed[seed_len/3:2*seed_len/3]]) % 255
+b = sum([ord(c) for c in seed[2*seed_len/3:]]) % 255
+
+genSquare((r, g, b), seed, 40)
+genSquare((b, r, g), seed[::-1], 40)
 
 # Vertical Symmetry
 for i in range(img.size[0]/2):
