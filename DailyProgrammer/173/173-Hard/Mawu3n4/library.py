@@ -15,7 +15,7 @@ text = {
         # Will get user input on stdin and send it to
         # the class ctor with the name var_name
         'INPUT weapon',
-        '0.06%A fine weapon that followed you everywhere, no other Mage, Warrior, Scout, or Archer can weild it like you do, you are the most talented ..',
+        '0.06%A fine weapon that followed you everywhere, no other Mage, Cleric, Warrior, Scout, or Archer can weild it like you do, you are the most talented ..',
         'INPUT spec',
         "0.048%You start walking at a slow pace towards the breach between nature's fingers when you realize the growing noise behind you.\n",
         '0.08%The lull suddenly come back and fills the air, a sore iron smell sting your nose and you feel eyes on you.\n',
