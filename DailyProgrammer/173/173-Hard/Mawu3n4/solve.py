@@ -124,7 +124,7 @@ class Mage(Player):
         self.power = teleport
         self.power_up = "You open up the book from your satchel and you close "
         self.power_up += "your eyes as the arcanes surrounds you, you re-open "
-        self.power_up += "them and are throug the right path.\n"
+        self.power_up += "them and are through the right path.\n"
 
 class Cleric(Player):
     def __init__(self, **kwargs):
@@ -138,14 +138,14 @@ class Archer(Player):
 def getNewPaths():
     paths = {}
 
-#     library.printStrWithDelay(("The branches of the narrow trees slap your \
-# face as you try to stay alive and two paths emerge before you.\n"))
+    library.printStrWithDelay(("The branches of the narrow trees slap your \
+    face as you try to stay alive and two paths emerge before you.\n"))
 
     paths['R'] = genNewPath()
     paths['L'] = genNewPath(paths['R'])
 
-    # printPath(paths['R'], "right")
-    # printPath(paths['L'], "left")
+    printPath(paths['R'], "right")
+    printPath(paths['L'], "left")
 
     return paths
 
@@ -196,8 +196,8 @@ def gameLoop(player, monster):
         if not player.resting:
             paths = getNewPaths()
 
-            # library.printStrWithDelay("Which path do you take ?.. [R/L" +
-            #                           ("/Power]" if player.power else "]"))
+            library.printStrWithDelay("Which path do you take ?.. [R/L" +
+                                   ("/Power]" if player.power else "]"))
             u_input = raw_input()
             u_input = 'R' if not len(u_input) else u_input.capitalize()[0]
 
