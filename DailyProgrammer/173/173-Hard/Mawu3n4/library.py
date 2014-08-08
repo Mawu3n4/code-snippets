@@ -88,7 +88,7 @@ rested_pool = {"You feel energy flow through your veins.\n",
                "A foe crossing your path right now would be a dead foe.\n",
                "You never felt so good before.\n"}
 
-hit_pool = {"The beast swing its arms at you and its claws gripps deeply into your flesh.\n"}
+hit_pool = {"The beast swings its arms at you and its claws gripps deeply into your flesh.\n"}
 
 monster_pos_pool = [
     "You can't hear the growling of the beast anymore, it is not a good thing.\n",
