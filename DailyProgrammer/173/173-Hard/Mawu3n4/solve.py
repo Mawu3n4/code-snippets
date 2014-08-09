@@ -94,13 +94,15 @@ class Player(object):
             "You can't run anymore, take your {0} and fight !\n".format(
                 self.weapon))
 
-        res = random.randrange(0,2)
+        difficulty = 4
+        res = random.randrange(0,difficulty)
         while not res:
             library.printStrWithDelay(library.getMissedSentence())
             self.stamina -= opponent.attack + self.action_cost
             library.printStrWithDelay(library.getHitSentence())
             if not self.checkStamina(): return False
-            res = random.randrange(0,3)
+            difficulty -= 1
+            res = random.randrange(0,difficulty)
 
         return True
 
@@ -224,5 +226,4 @@ def gameLoop(player, monster):
         player.checkStamina()
 
 
-# gameLoop(initGame(), Monster())
-gameLoop(Warrior(weapon="Axe", spec="Warrior"), Monster())
+gameLoop(initGame(), Monster())
