@@ -31,7 +31,7 @@ void    shuffle(char *s) {
 
 int     is_equal(char *s1, char *s2) {
   while (*s1 && *s1++ == *s2++);
-  return (*s1++ ? 0 : 1);
+  return (!*s1++);
 }
 
 int     bogo_sort(char *start, char *end) {
