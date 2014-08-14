@@ -36,6 +36,7 @@ char    *append(char *array, char c) {
   strcpy(ret,array);
   ret[len(ret)] = c;
   ret[sizeof(ret)] = '\0';
+  free(array);
   return ret;
 }
 
