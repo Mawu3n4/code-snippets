@@ -5,7 +5,7 @@
 ** Contact <contact@zackdibe.com>
 **
 ** Started on  Thu Aug 14 13:56:39 2014 zackaria dibe
-** Last update Thu Aug 14 17:29:43 2014 zackaria dibe
+** Last update Fri Aug 15 21:01:54 2014 zackaria dibe
 */
 
 #include <stdio.h>
@@ -93,16 +93,46 @@ void    split(char *str, char **list, char token) {
   list[++k] = NULL;
 }
 
-int     main(int ac, char **av) {
+int     find(char *word, char *letters) {
+  //TODO
+  printf("%s %s\n", word, letters);
+  while (*word)
+    if (*word++ == *letters)
+      *letters++;
+  return (0);
+}
+
+int     main(int max_size, char **av) {
   char  **words;
   char  *letters;
+  int   nb_words, len_word;
+  int   *res;
 
-  if (ac != 3)
+  // max_size == ac == av length
+  if (max_size != 3)
     return (0);
 
-  words = (char **) malloc(countWords(av[1], ' ') * sizeof(char *));
+  nb_words = countWords(av[1], ' ');
+  words = (char **) malloc(nb_words * sizeof(char *));
+  res = (int *) malloc(nb_words * sizeof(int));
   letters = (char *) malloc(sizeof(av[2]));
   removeChar(' ', av[2], letters);
   letters = quickSort(letters);
   split(av[1], words, ' ');
+  max_size = 0;
+  nb_words = 0;
+  for (int i = 0; words[i]; ++i)
+    if (find(quickSort(words[i]), letters)) {
+      len_word = len(words[i]);
+      if (len_word > max_size) {
+        max_size = len_word;
+        nb_words = 0;
+      }
+      if (len_word == max_size) {
+        res[nb_words] = i;
+        nb_words++;
+      }
+    }
+  while (nb_words--)
+    printf("%s\n", words[res[nb_words - 1]]);
 }
