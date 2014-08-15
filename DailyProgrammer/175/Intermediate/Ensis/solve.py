@@ -3,7 +3,7 @@ import re
 
 if len(sys.argv) < 3:
     print "Usage: python solve.py 'word word' 'l e t t e r s'"
-    sys.exit()
+    exit()
 
 letters = "".join(sorted(sys.argv[2].split(" ")))
 msz = 0
