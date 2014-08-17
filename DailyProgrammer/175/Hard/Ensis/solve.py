@@ -6,10 +6,10 @@ def getMirrors():
     for i in range(int(raw_input())):
         x1, y1, x2, y2 = [float(i) for i in raw_input().split(" ")]
         mirrors.append([(x1, y1), (x2, y2)])
-    mirrors.append([(0.0, 0.0), (30.0, 0.0)])
-    mirrors.append([(30.0, 0.0), (30.0, 30.0)])
-    mirrors.append([(30.0, 30.0), (0.0, 30.0)])
-    mirrors.append([(0.0, 30.0), (0.0, 0.0)])
+    mirrors.append([(0, 0), (30, 0)])
+    mirrors.append([(30, 0), (30, 30)])
+    mirrors.append([(30, 30), (0, 30)])
+    mirrors.append([(0, 30), (0, 0)])
     return mirrors
 
 def getRay():
@@ -28,6 +28,9 @@ def normalize(x, y):
 
 def getCos((x1, y1), (x2, y2)):
     return (x1 * x2 + y1 * y2) / (dist((0, 0), (x1, y1)) * dist((0, 0), (x2, y2)))
+
+def drawLine(draw, p1, p2, col):
+    draw.line([(p1[0] * 10, p1[1] * 10), (p2[0] * 10, p2[1] * 10)], fill=col)
 
 def intersect(draw, ray, mirrors):
     (x1, y1), (x2, y2), sz = ray
@@ -53,34 +56,27 @@ def intersect(draw, ray, mirrors):
         minm = m
         minc = (x, y)
     if minm == 0:
-        u2, v2 = [i * 10 for i in ray[0]]
-        u1, v1 = [i * 10 for i in (x1 + ray[1][0] * ray[2], y1 + ray[1][1] * ray[2])]
-        draw.line([(u1, v1), (u2, v2)], fill=(255, 0, 0))
+        drawLine(draw, ray[0], (x1 + ray[1][0] * ray[2], y1 + ray[1][1] * ray[2]), (255, 0, 0))
         ray[2] = 0
         return
     (x3, y3), (x4, y4) = minm
     coef = 2 * mind * getCos(ray[1], (x4 - x3, y4 - y3))
     vx, vy = normalize(x4 - x3, y4 - y3)
-    newv = (x1 + vx * coef, y1 + vy * coef)
-    u2, v2 = [i * 10 for i in minc]
-    u1, v1 = [i * 10 for i in ray[0]]
-    draw.line([(u1, v1), (u2, v2)], fill=(255, 0, 0))
+    drawLine(draw, minc, ray[0], (255, 0, 0))
     ray[0] = minc
-    ray[1] = normalize(newv[0] - minc[0], newv[1] - minc[1])
+    ray[1] = normalize((x1 + vx * coef) - minc[0], (y1 + vy * coef) - minc[1])
     ray[2] = sz - mind
 
-
 sz = 300
-im = Image.new("RGB", (sz, sz))
+im = Image.new("RGB", (sz, sz), (255, 255, 255))
 draw = ImageDraw.Draw(im)
 mirrors = getMirrors()
 ray = getRay()
+stx, sty = [i * 10 for i in ray[0]]
 
 for m in mirrors:
-    (x1, y1) = [i * 10 for i in m[0]]
-    (x2, y2) = [i * 10 for i in m[1]]
-    draw.line([(x1, y1), (x2, y2)], fill=(255, 255, 255))
-
+    drawLine(draw, m[0], m[1], (0, 0, 0))
+draw.ellipse((stx - 3, sty - 3, stx + 3, sty + 3), fill=(0, 0, 255))
 while ray[2]:
     intersect(draw, ray, mirrors)
 
