@@ -5,7 +5,7 @@
 ** Contact <contact@zackdibe.com>
 **
 ** Started on  Thu Aug 14 13:56:39 2014 zackaria dibe
-** Last update Fri Aug 15 21:01:54 2014 zackaria dibe
+** Last update Mon Aug 18 13:47:23 2014 zackaria dibe
 */
 
 #include <stdio.h>
@@ -95,12 +95,14 @@ void    split(char *str, char **list, char token) {
 }
 
 int     find(char *word, char *letters) {
-  //TODO
-  printf("%s %s\n", word, letters);
-  while (*word)
-    if (*word++ == *letters)
-      *letters++;
-  return (0);
+  if (!*word)
+    return (1);
+  else if (!*letters)
+    return (0);
+  else if (*word == *letters)
+    return find(word + 1, letters + 1);
+  else
+    return find(word, letters + 1);
 }
 
 int     main(int max_size, char **av) {
@@ -135,5 +137,5 @@ int     main(int max_size, char **av) {
       }
     }
   while (nb_words--)
-    printf("%s\n", words[res[nb_words - 1]]);
+    printf("%s\n", words[res[nb_words]]);
 }
