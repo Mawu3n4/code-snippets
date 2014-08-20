@@ -13,3 +13,6 @@ My take on a simple implementation of radix/patricia trie in python for NLP pupr
 * Remove
 
 * Improve label storage
+* 
+
+[Useful link](http://xlinux.nist.gov/dads//HTML/patriciatree.html)
