@@ -13,9 +13,9 @@
 
 #### Intermediate
 
-//
+[Spreadsheet Operations](http://www.reddit.com/r/dailyprogrammer/comments/2e2v28/8202014_challenge_176_hard_spreadsheet_developer/)
 
-* Ensiss **KO**
+* Ensiss _OK_
 
 * gfauchart **KO**
 
