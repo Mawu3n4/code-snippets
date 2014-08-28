@@ -1,21 +1,28 @@
+import time
 
-
-sounds = {
-    '.': { 'vol': 100, 'len': 0.2},
-    '-': { 'vol': 100, 'len': 0.6},
-    '/': { 'vol': 0, 'len': 0.8},
-    'freq': 440,
-    'rate': 44100
-    }
+try:
+    import winsound
+except ImportError:
+    import os
+    def beep(frequency, duration):
+        os.system('beep -f %s -l %s' % (frequency, duration))
+else:
+    def beep(frequency, duration):
+        winsound.Beep(frequency, duration)
 
 morse = [".-", "-...", "-.-.", "-..", ".", "..-.", "--.", "....", "..", ".---",
          "-.-", ".-..", "--", "-.", "---", ".--.", "--.-", ".-.", "...", "-",
          "..-", "...-", ".--", "-..-", "-.--", "--.", "-----", ".----", "..---",
          "...--", "....-", ".....", "-....", "--...", "---..", "----."]
 
-u_input = raw_input('Enter a phrase to be coded: ')
+for c in raw_input("Enter a phrase to be coded: "):
+    code = ''
+    if 'a' <= c.lower() <= 'z':
+        code = morse[ord(c.lower()) - ord('a')]
+    if not len(code):
+        time.sleep(0.6)
+    for c_morse in code:
+        beep(880, 300 if c_morse == '-' else 100)
+        time.sleep(0.2)
+    time.sleep(0.4)
 
-print "/".join([ morse[ord(x) - ord('a')]
-                 for x in u_input
-                 if 'a' <= x <= 'z'
-                 ])
