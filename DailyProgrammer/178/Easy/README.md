@@ -2,7 +2,7 @@
 
 #### Easy
 
-[Quicksort](http://www.reddit.com/r/dailyprogrammer/comments/2ejl4x/8252014_challenge_177_easy_quicksort/)
+[Transformers: Matrices in Disguise, pt. 1](http://www.reddit.com/r/dailyprogrammer/comments/2f6a7b/9012014_challenge_178_easy_transformers_matrices/)
 
 * Ensiss **KO**
 
