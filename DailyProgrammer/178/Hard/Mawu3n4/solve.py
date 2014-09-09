@@ -14,8 +14,9 @@ pattern = raw_input('Regexp ?: ').strip()
 
 def fill(data, x, y, end_x, end_y, value):
     if (x+1) == end_x:
-        if re.compile(pattern).search(value):
-            data[x, y] = (0, 0, 0)
+        match = re.compile(pattern).search(value)
+        if match:
+            data[x, y] = (255*sum(len(group) for group in match.groups())/len(value), 0, 0)
     else:
         fill(data, (x + end_x)>>1, y, end_x, (y + end_y)>>1, value + "1")
         fill(data, x, y, (x + end_x)>>1, (y + end_y)>>1, value + "2")
