@@ -19,7 +19,7 @@
 
 * gfauchart **KO**
 
-* Mawu3n4 **KO**
+* Mawu3n4 _OK_
 
 
 #### Hard
