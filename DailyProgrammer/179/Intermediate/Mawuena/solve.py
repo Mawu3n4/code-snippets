@@ -1,12 +1,18 @@
 
 import sys
 import curses
+import random
 
 from curses import KEY_DOWN, KEY_UP, KEY_LEFT, KEY_RIGHT
 from random import randint
 
 WIDTH = 60
 HEIGHT = 20
+
+SEED = 15
+
+OBSTACLES = WIDTH * HEIGHT / SEED
+FOODS = WIDTH * HEIGHT / (SEED * 2)
 
 def move(world, d):
     player = world['player']
@@ -19,7 +25,14 @@ def move(world, d):
         player['y'] = player['p_y']
         player['x'] = player['p_x']
 
-    return True
+    else:
+        player['life'] -= 1
+
+    if (player['y'], player['x']) in world['food']:
+        world['food'].remove((player['y'], player['x']))
+        player['score'] += 1
+
+    return not not player['life']
 
 
 def init_curses(width, height):
@@ -38,6 +51,11 @@ def end_game(world, key):
 
 
 def init_game():
+
+    def get_rand_pos():
+        return (random.randrange(2, HEIGHT - 1),
+                random.randrange(2, WIDTH - 1))
+
     world = {
         'walls': [(y, x)
                   for x in range(1, WIDTH-1)
@@ -52,9 +70,22 @@ def init_game():
             'y' : HEIGHT / 2,
             'p_x': WIDTH / 2,
             'p_y': HEIGHT / 2,
-            'score': 0
+            'score': 0,
+            'life': 101
             }
         }
+
+    for i in range(OBSTACLES):
+        obstacle = get_rand_pos()
+        while obstacle in world['walls']:
+            obstacle = get_rand_pos()
+        world['walls'].append(obstacle)
+
+    for i in range(FOODS):
+        food = get_rand_pos()
+        while food in world['walls']:
+            food = get_rand_pos()
+        world['food'].append(food)
 
     return world
 
@@ -73,12 +104,13 @@ def game_loop(win, world):
     loop = True
     while loop:
         win.border(0)
-        win.addstr(0, 2, 'Score : ' + str(world['player']['score']) + ' ')
+        win.addstr(0, 2, 'Score : {0} - Life : {1}'.format(
+                world['player']['score'], world['player']['life']-1) + ' ')
         event = win.getch()
         for wall in world['walls']:
             win.addch(wall[0], wall[1], 'X')
         for food in world['food']:
-            win.addch(wall[0], wall[1], 'o')
+            win.addch(food[0], food[1], 'o')
         key = key if event == -1 else event
         if key in actions:
             loop = actions[key](world, key)
