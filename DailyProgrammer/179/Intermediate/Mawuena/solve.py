@@ -9,6 +9,11 @@ from random import randint
 WIDTH = 60
 HEIGHT = 20
 
+WALL = '#'
+PLAYER = '@'
+EMPTY = ' '
+FOOD = 'O'
+
 SEED = 15
 
 OBSTACLES = WIDTH * HEIGHT / SEED
@@ -37,9 +42,13 @@ def move(world, d):
 
 def init_curses(width, height):
     curses.initscr()
+    curses.start_color()
     win = curses.newwin(height, width, 0, 0)
     win.keypad(1)
     curses.noecho()
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLACK)
     curses.curs_set(0)
     win.border(0)
     win.nodelay(1)
@@ -90,6 +99,25 @@ def init_game():
     return world
 
 
+def print_world(win, world):
+    win.border(0)
+    win.addstr(0, 2, 'Score : {0} - Life : {1}'.format(
+            world['player']['score'], world['player']['life']-1))
+
+    for y in range(1, HEIGHT-1):
+        for x in range(1, WIDTH-1):
+            win.addch(y, x, (WALL if (y, x) in world['walls'] else
+                             FOOD if (y, x) in world['food'] else
+                             EMPTY),
+                      (RED if (y, x) in world['walls'] else
+                       BLUE if (y, x) in world['food'] else
+                       GREEN)
+                      )
+
+    win.addch(world['player']['p_y'], world['player']['p_x'], EMPTY)
+    win.addch(world['player']['y'], world['player']['x'], PLAYER, GREEN)
+
+
 def game_loop(win, world):
     key = ''
 
@@ -103,24 +131,21 @@ def game_loop(win, world):
 
     loop = True
     while loop:
-        win.border(0)
-        win.addstr(0, 2, 'Score : {0} - Life : {1}'.format(
-                world['player']['score'], world['player']['life']-1) + ' ')
         event = win.getch()
-        for wall in world['walls']:
-            win.addch(wall[0], wall[1], 'X')
-        for food in world['food']:
-            win.addch(food[0], food[1], 'o')
         key = key if event == -1 else event
         if key in actions:
             loop = actions[key](world, key)
         key = ''
-        win.addch(world['player']['p_y'], world['player']['p_x'], ' ')
-        win.addch(world['player']['y'], world['player']['x'], '#')
+        print_world(win, world)
 
     curses.endwin()
     print "Score - {0}".format(world['player']['score'])
 
 
-game_loop(init_curses(width=WIDTH, height=HEIGHT), init_game())
+_win = init_curses(width=WIDTH, height=HEIGHT)
 
+RED = curses.color_pair(1)
+GREEN = curses.color_pair(2)
+BLUE = curses.color_pair(4)
+
+game_loop(_win, init_game())
