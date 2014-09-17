@@ -42,9 +42,13 @@ def move(world, d):
 
 def init_curses(width, height):
     curses.initscr()
+    curses.start_color()
     win = curses.newwin(height, width, 0, 0)
     win.keypad(1)
     curses.noecho()
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)
+    curses.init_pair(4, curses.COLOR_BLUE, curses.COLOR_BLACK)
     curses.curs_set(0)
     win.border(0)
     win.nodelay(1)
@@ -106,7 +110,12 @@ def print_world(win, world):
                 abs(world['player']['x'] - x) < world['player']['score'] + 3):
                 win.addch(y, x, (WALL if (y, x) in world['walls'] else
                                  FOOD if (y, x) in world['food'] else
-                                 EMPTY))
+                                 EMPTY),
+                          (RED if (y, x) in world['walls'] else
+                           BLUE if (y, x) in world['food'] else
+                           GREEN)
+                          )
+
             else:
                 win.addch(y, x, ' ')
 
@@ -138,4 +147,10 @@ def game_loop(win, world):
     print "Score - {0}".format(world['player']['score'])
 
 
-game_loop(init_curses(width=WIDTH, height=HEIGHT), init_game())
+_win = init_curses(width=WIDTH, height=HEIGHT)
+
+RED = curses.color_pair(1)
+GREEN = curses.color_pair(2)
+BLUE = curses.color_pair(4)
+
+game_loop(_win, init_game())
