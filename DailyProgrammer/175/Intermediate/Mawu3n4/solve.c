@@ -5,7 +5,7 @@
 ** Contact <contact@zackdibe.com>
 **
 ** Started on  Thu Aug 14 13:56:39 2014 zackaria dibe
-** Last update Mon Aug 18 13:47:23 2014 zackaria dibe
+** Last update Mon Sep 29 14:28:29 2014 zackaria dibe
 */
 
 #include <stdio.h>
@@ -80,17 +80,17 @@ char    *quickSort(char *data) {
 
 // Who needs strtok ?
 void    split(char *str, char **list, char token) {
-  int   k = -1;
+  int   k = 0;
 
-  while (*str) {
+  list[k] = str;
+  while (*str)
     if (*str != token)
-      list[++k] = (char *) malloc(WORD_SIZE);
-    for (int j = 0; *str && *str != token; ++j, *str++) {
-      list[k][j] = *str;
-      list[k][j+1] = '\0';
+      *str++;
+    else if (*str == token) {
+      *str = '\0';
+      *str++;
+      list[++k] = str;
     }
-    if (*str == token) *str++;
-  }
   list[++k] = NULL;
 }
 
@@ -138,4 +138,7 @@ int     main(int max_size, char **av) {
     }
   while (nb_words--)
     printf("%s\n", words[res[nb_words]]);
+  free(words);
+  free(letters);
+  free(res);
 }
