@@ -48,21 +48,22 @@ def guess(hangman):
         print 'Correct guess !'
         if '_' in guessed:
             u_input = get_letter()
-        else:
-            return
+    if not '_' in guessed:
+        return
     else:
         print 'Wrong guess !'
         print '\n'.join(hangman)
 
-for step in steps:
-    guess(hangman)
-    x, xe = step[0]
-    y, ye = step[1]
-    for char in step[2]:
-        hangman[y] = hangman[y][:x-1] + char + hangman[y][x:]
-        y += 1*(y < ye) + -1*(y > ye)
-        x += 1*(x < xe) + -1*(x > xe)
 guess(hangman)
+for step in steps:
+    if '_' in guessed:
+        x, xe = step[0]
+        y, ye = step[1]
+        for char in step[2]:
+            hangman[y] = hangman[y][:x-1] + char + hangman[y][x:]
+            y += 1*(y < ye) + -1*(y > ye)
+            x += 1*(x < xe) + -1*(x > xe)
+        guess(hangman)
 
 if '_' in guessed:
     print 'You lost!'
