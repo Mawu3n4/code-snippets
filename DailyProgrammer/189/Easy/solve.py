@@ -8,13 +8,7 @@ word = [c for c in raw_input('Enter a word to be guessed: ') if c.isalpha()]
 
 guessed = ['_'] * len(word)
 
-hangman = [
-    '                    ',
-    '                    ',
-    '                    ',
-    '                    ',
-    '                    ',
-    '                    ',
+hangman = [20*' ']*6 + [
     '  _________________ ',
     ' /                /|',
     '/________________/ /',
