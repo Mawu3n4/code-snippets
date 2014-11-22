@@ -13,3 +13,10 @@ Paradigms
 ```
 
 
+# TO DO
+
+* Euler in J
+
+* Easy Dailyprogrammer in J
+
+* NLP with ANNs in Python or C
