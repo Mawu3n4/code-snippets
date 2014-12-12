@@ -15,5 +15,5 @@ void cll_insert(Node *start, char data);
 /* Take care of next pointer, will be NULL for the last node */
 void ll_insert(Node *start, char data);
 
-void ll_print(Node *start)
+void ll_print(Node *start);
 int ll_isLoop(Node *start);

@@ -1,0 +1,6 @@
+```shell
+
+    $ gcc -c *C
+    $ ar -cvq clib.a *.o
+
+```
