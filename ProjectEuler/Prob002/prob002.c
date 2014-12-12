@@ -1,20 +1,7 @@
 
 #include <unistd.h>
 
-#define CHAR(x) (x + '0')
-
-void print_char(char c) {
-  write(1, &c, 1);
-}
-
-void print_nb(int nb) {
-  if (nb < 10) {
-    print_char(CHAR(nb));
-  } else {
-    print_nb(nb / 10);
-    print_nb(nb % 10);
-  }
-}
+#include "utils.h"
 
 int fibo(int n) {
   return (!n ? 0 : n == 1 ? 1 : fibo(n - 1) + fibo(n - 2));

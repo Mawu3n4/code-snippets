@@ -1,20 +1,7 @@
 
 #include <unistd.h>
 
-#define CHAR(x) (x + '0')
-
-void print_char(char c) {
-  write(1, &c, 1);
-}
-
-void print_nb(int nb) {
-  if (nb < 10) {
-    print_char(CHAR(nb));
-  } else {
-    print_nb(nb / 10);
-    print_nb(nb % 10);
-  }
-}
+#include "utils.h"
 
 int isPalindrome(int n) {
   int reversed = 0, tmp = n;
