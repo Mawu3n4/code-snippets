@@ -32,13 +32,21 @@ class pQueue:
     def empty(self):
         return not len(self.nodes)
 
-def pathfinding(grid, start):
+def pathfinding(grid, start, end):
     path = pQueue()
     path.push(start, 0)
-    print grid.neighbors(start)
+
     return path
 
-grid = Grid(10, 10)
+# inputs = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
+inputs = "10 (0,0) (9,9)".split(' ')
+grid = Grid(inputs[0], inputs[0])
+
 grid.walls = [(5, 5)]
 
-pathfinding(grid, (3, 1))
+def strtotuple(s):
+    return tuple([int(x) for x in s.strip('()').split(',')])
+
+pathfinding(grid, strtotuple(inputs[1]), strtotuple(inputs[2]))
+
+print Grid.neighbors(grid, (3, 1))
