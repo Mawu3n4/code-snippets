@@ -1,4 +1,8 @@
-import heapq
+from random import randrange
+
+import collections
+import math
+import sys
 
 class Grid:
     def __init__(self, width, height):
@@ -19,34 +23,60 @@ class Grid:
                                       for yd in range(-1,2)
                                       if xd or yd])
 
-class pQueue:
-    def __init__(self):
-        self.nodes = []
+    def show(self, path=[], space='.', pathc='O', wall='X'):
+        for y in range(self.height):
+            for x in range(self.width):
+                if (x, y) in path:
+                    sys.stdout.write(pathc)
+                else:
+                    sys.stdout.write(space if self.walkable((x, y)) else wall)
+            print ''
 
-    def push(self, node, wheight):
-        heapq.heappush(self.nodes, (wheight, node))
+
+class Queue:
+    def __init__(self):
+        self.nodes = collections.deque()
+
+    def push(self, node):
+        self.nodes.append(node)
 
     def pop(self):
-        return heapq.heappop(self.nodes)[1]
+        return self.nodes.popleft()
 
     def empty(self):
         return not len(self.nodes)
 
 def pathfinding(grid, start, end):
-    path = pQueue()
-    path.push(start, 0)
-
-    return path
-
-# inputs = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
-inputs = "10 (0,0) (9,9)".split(' ')
-grid = Grid(inputs[0], inputs[0])
-
-grid.walls = [(5, 5)]
+    path = Queue()
+    path.push(start)
+    return path.nodes
 
 def strtotuple(s):
     return tuple([int(x) for x in s.strip('()').split(',')])
 
-pathfinding(grid, strtotuple(inputs[1]), strtotuple(inputs[2]))
+def sample(size, percent):
+    return int(math.floor(size*size*percent/100.))
 
-print Grid.neighbors(grid, (3, 1))
+size, start, end = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
+size = int(size)
+start = strtotuple(start)
+end = strtotuple(end)
+grid = Grid(size, size)
+
+for n_wells in range(sample(size, 3)):
+    x, y = randrange(size), randrange(size)
+    neighbors = grid.neighbors((x, y))
+    while not grid.walkable((x, y)) or start == (x, y) or start in neighbors:
+        x, y = randrange(size), randrange(size)
+        neighbors = grid.neighbors((x, y))
+    grid.obstacles.append((x, y))
+    grid.obstacles.extend(neighbors)
+
+for n_asteroids in range(sample(size, 6)):
+    x, y = randrange(size), randrange(size)
+    while not grid.walkable((x, y)) or start == (x, y):
+        x, y = randrange(size), randrange(size)
+    grid.obstacles.append((x, y))
+
+grid.obstacles = list(set(grid.obstacles))
+grid.show(path=pathfinding(grid, start, end))
