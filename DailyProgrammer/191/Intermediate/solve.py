@@ -49,34 +49,68 @@ class Queue:
 def pathfinding(grid, start, end):
     path = Queue()
     path.push(start)
-    return path.nodes
+    visited = {}
+    visited[start] = None
+
+    while not path.empty():
+        curr = path.pop()
+
+        if curr == end:
+            break
+
+        for node in grid.neighbors(curr):
+            if not node in visited:
+                path.push(node)
+                visited[node] = curr
+
+    return visited
 
 def strtotuple(s):
     return tuple([int(x) for x in s.strip('()').split(',')])
 
 def sample(size, percent):
-    return int(math.floor(size*size*percent/100.))
+    return int(math.floor(size*percent/100.))
 
-size, start, end = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
-size = int(size)
-start = strtotuple(start)
-end = strtotuple(end)
-grid = Grid(size, size)
+def addObstacles(grid, start, end, well_pop=3, asteroid_pop=6):
+    size = grid.width * grid.height
 
-for n_wells in range(sample(size, 3)):
-    x, y = randrange(size), randrange(size)
-    neighbors = grid.neighbors((x, y))
-    while not grid.walkable((x, y)) or (x, y) in [start, end] or {start, end} & set(neighbors):
+    for n_wells in range(sample(size, 3)):
         x, y = randrange(size), randrange(size)
         neighbors = grid.neighbors((x, y))
-    grid.obstacles.append((x, y))
-    grid.obstacles.extend(neighbors)
+        while not grid.walkable((x, y)) or (x, y) in [start, end] or {start, end} & set(neighbors):
+            x, y = randrange(size), randrange(size)
+            neighbors = grid.neighbors((x, y))
+        grid.obstacles.append((x, y))
+        grid.obstacles.extend(neighbors)
 
-for n_asteroids in range(sample(size, 6)):
-    x, y = randrange(size), randrange(size)
-    while not grid.walkable((x, y)) or (x, y) in [start, end]:
+    for n_asteroids in range(sample(size, 6)):
         x, y = randrange(size), randrange(size)
-    grid.obstacles.append((x, y))
+        while not grid.walkable((x, y)) or (x, y) in [start, end]:
+            x, y = randrange(size), randrange(size)
+        grid.obstacles.append((x, y))
 
-grid.obstacles = list(set(grid.obstacles))
-grid.show(path=pathfinding(grid, start, end))
+    grid.obstacles = list(set(grid.obstacles))
+
+def getInput():
+    size, start, end = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
+    return int(size), strtotuple(start), strtotuple(end)
+
+def solve():
+    size, start, end = getInput()
+    grid = Grid(size, size)
+    addObstacles(grid, start, end)
+    path=pathfinding(grid, start, end)
+    reconstructed_path = []
+    if end in path:
+        curr = path[end]
+        while not start in reconstructed_path:
+            reconstructed_path.append(curr)
+            curr = path[curr]
+    else:
+        print "No path found."
+
+    grid.show(path=reconstructed_path)
+
+
+if __name__ == "__main__":
+    solve()
