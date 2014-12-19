@@ -66,7 +66,7 @@ grid = Grid(size, size)
 for n_wells in range(sample(size, 3)):
     x, y = randrange(size), randrange(size)
     neighbors = grid.neighbors((x, y))
-    while not grid.walkable((x, y)) or start == (x, y) or start in neighbors:
+    while not grid.walkable((x, y)) or (x, y) in [start, end] or {start, end} & set(neighbors):
         x, y = randrange(size), randrange(size)
         neighbors = grid.neighbors((x, y))
     grid.obstacles.append((x, y))
@@ -74,7 +74,7 @@ for n_wells in range(sample(size, 3)):
 
 for n_asteroids in range(sample(size, 6)):
     x, y = randrange(size), randrange(size)
-    while not grid.walkable((x, y)) or start == (x, y):
+    while not grid.walkable((x, y)) or (x, y) in [start, end]:
         x, y = randrange(size), randrange(size)
     grid.obstacles.append((x, y))
 
