@@ -1,6 +1,7 @@
 from random import randrange
 
 import collections
+import heapq
 import math
 import sys
 
@@ -15,6 +16,12 @@ class Grid:
         return (0 <= x < self.width
                 and 0 <= y < self.height
                 and not node in self.obstacles)
+
+    def cost(self, a, b):
+        (xa, ya) = a
+        (xb, yb) = b
+
+        return 1 if xa == xb or ya == yb else 2
 
     def neighbors(self, node):
         (x, y) = node
@@ -46,11 +53,23 @@ class Queue:
     def empty(self):
         return not len(self.nodes)
 
-def pathfinding(grid, start, end):
+class pQueue:
+    def __init__(self):
+        self.nodes = []
+
+    def push(self, node, priority):
+        heapq.heappush(self.nodes, (priority, node))
+
+    def pop(self):
+        return heapq.heappop(self.nodes)[1]
+
+    def empty(self):
+        return not len(self.nodes)
+
+def bfs(grid, start, end):
     path = Queue()
     path.push(start)
-    visited = {}
-    visited[start] = None
+    visited = {start: None}
 
     while not path.empty():
         curr = path.pop()
@@ -62,6 +81,30 @@ def pathfinding(grid, start, end):
             if not node in visited:
                 path.push(node)
                 visited[node] = curr
+
+    return visited
+
+def astar(grid, start, end):
+    def manhattan(a, b, d = 1):
+        return d * (abs(a[0] - b[0]) + abs(a[1] - b[1]))
+
+    path = pQueue()
+    path.push(start, 0)
+    visited = {start: None}
+    costs = {start: 0}
+
+    while not path.empty():
+        curr = path.pop()
+
+        if curr == end:
+            break
+
+        for node in grid.neighbors(curr):
+            new_cost = costs[curr] + grid.cost(curr, node)
+            if not node in costs or new_cost < costs[node]:
+                path.push(node, new_cost + manhattan(end, node))
+                visited[node] = curr
+                costs[node] = new_cost
 
     return visited
 
@@ -95,17 +138,25 @@ def getInput():
     size, start, end = raw_input("Size of the grid, starting position and destination ?:\n").split(' ')
     return int(size), strtotuple(start), strtotuple(end)
 
+def reconstructPath(visited, start, end):
+    curr = end
+    path = [curr]
+
+    while not start in path:
+        curr = visited[curr]
+        path.append(curr)
+
+    return path
+
 def solve():
     size, start, end = getInput()
     grid = Grid(size, size)
     addObstacles(grid, start, end)
-    path=pathfinding(grid, start, end)
+    path=astar(grid, start, end)
     reconstructed_path = []
+
     if end in path:
-        curr = path[end]
-        while not start in reconstructed_path:
-            reconstructed_path.append(curr)
-            curr = path[curr]
+        reconstructed_path = reconstructPath(path, start, end)
     else:
         print "No path found."
 
