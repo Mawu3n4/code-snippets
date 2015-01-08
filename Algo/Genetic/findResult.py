@@ -1,6 +1,7 @@
 
 from rcdtype import *
 import operator
+import math
 
 # TARGET = int(raw_input("Number to find ?: "))
 # MAX_GEN = int(raw_input("Maximum number of generations ?: "))
@@ -60,13 +61,12 @@ def getFitness(genes, target):
     if res == TARGET:
         return RESULT_FOUND
     else:
-        return 1/abs(TARGET - res)
+        return 1/math.fabs(TARGET - res)
 
 def printChromosome(chrom):
     decoded = parseGenes(chrom.genes)
 
     print 0,
-
     for elem in decoded:
         print elem if elem < 10 else DECODE_OP[elem][1],
     print ''
@@ -80,11 +80,35 @@ def randChromosome():
     return chrom
 
 def main():
-    pop = [randChromosome() for i in xrange(POP_SIZE)]
+    pop = [Chromosome(randGenes(), 0.0) for i in xrange(POP_SIZE)]
+    found = False
+    n_gen = 0
 
-    for elem in pop:
-        if elem.fitness == RESULT_FOUND:
-            printChromosome(elem)
+    while not found:
+        for i in xrange(POP_SIZE):
+            pop[i].fitness = getFitness(pop[i].genes, TARGET)
+
+        for chrom in pop:
+            if chrom.fitness == RESULT_FOUND:
+                print "Chromosome found in", n_gen, "generations"
+                printChromosome(chrom)
+                found = True
+        if found or n_gen > MAX_GEN:
+            break
+
+        # TODO
+        # next_pop = []
+        # total_fitness = sum(chrom.fitness for chrom in pop)
+
+        # for i in xrange(POP_SIZE):
+        #     next_pop.append(crossover(wheelPick(pop, total_fitness),
+        #                               wheelPick(pop, total_fitness)))
+        # pop = next_pop
+
+        n_gen += 1
+
+    if n_gen > MAX_GEN:
+        print "No solution found"
 
 if __name__ == "__main__":
     main()
