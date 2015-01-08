@@ -16,10 +16,10 @@ RESULT_FOUND = 1337.42
 
 Chromosome = recordtype('Chromosome', 'genes fitness')
 
-DECODE_OP = {10: operator.add,
-             11: operator.sub,
-             12: operator.mul,
-             13: operator.div}
+DECODE_OP = {10: (operator.add, '+'),
+             11: (operator.sub, '-'),
+             12: (operator.mul, '*'),
+             13: (operator.div, '/')}
 
 def rand():
     from random import randint
@@ -53,13 +53,23 @@ def parseGenes(genes):
 def getFitness(genes, target):
     decoded = parseGenes(genes)
     res = 0.0
+
     for i in xrange(0, len(decoded)-1, 2):
-        res = DECODE_OP[decoded[i]](res, decoded[i+1])
+        res = DECODE_OP[decoded[i]][0](res, decoded[i+1])
 
     if res == TARGET:
         return RESULT_FOUND
     else:
         return 1/abs(TARGET - res)
+
+def printChromosome(chrom):
+    decoded = parseGenes(chrom.genes)
+
+    print 0,
+
+    for elem in decoded:
+        print elem if elem < 10 else DECODE_OP[elem][1],
+    print ''
 
 def randGenes():
     return ['1' if rand() < 5 else '0' for x in range(GEN_LEN * CHROM_LEN)]
@@ -73,9 +83,8 @@ def main():
     pop = [randChromosome() for i in xrange(POP_SIZE)]
 
     for elem in pop:
-        print ''.join(elem.genes), elem.fitness
-
-
+        if elem.fitness == RESULT_FOUND:
+            printChromosome(elem)
 
 if __name__ == "__main__":
     main()
