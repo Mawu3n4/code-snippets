@@ -66,9 +66,12 @@ def getFitness(genes, target):
 def printChromosome(chrom):
     decoded = parseGenes(chrom.genes)
 
-    print 0,
+    print sum(map(lambda x: 1 if x > 9 else 0, decoded))*'(' + '0',
     for elem in decoded:
-        print elem if elem < 10 else DECODE_OP[elem][1],
+        if elem < 10:
+            print elem, ')',
+        else:
+            print DECODE_OP[elem][1],
     print ''
 
 def randGenes():
