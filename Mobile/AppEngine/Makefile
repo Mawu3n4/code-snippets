@@ -9,6 +9,3 @@ env:
 
 deps:
 	pip install -r requirements.txt
-
-keys:
-	./src/application/generate_keys.py
