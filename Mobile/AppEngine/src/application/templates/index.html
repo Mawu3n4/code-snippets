@@ -1,20 +1,39 @@
 <!DOCTYPE html>
+<html lang="en" ng-app="myApp" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Friend List</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="static/css/app.css">
+</head>
+<body>
 
-<html>
-  <head>
-    <!-- stylesheets -->
-    <link rel='stylesheet' href='/static/css/main.css' />
+  <div ng-view></div>
 
-    <!-- Javascript -->
-    <script data-main='/static/js/main' src='/static/libs/requirejs/require.js'></script>
-  </head>
-  <body>
-    <ul class="nav pull-right">
-      {% if not session.logged_in %}
-      <li><a href="/facebook_login">Login or Signup</a></li>
-      {% else %}
-      <li><a href="/logout">Logout</a></li>
-      {% endif %}
-    </ul>
-  </body>
+  <script src="static/bower_components/angular/angular.js"></script>
+  <script src="static/bower_components/angular-route/angular-route.js"></script>
+  <script>
+
+    // Declare app level module which depends on views, and components
+    angular.module('myApp', [
+    'ngRoute',
+    'myApp.login',
+    'myApp.friends'
+    ]).
+    config(['$routeProvider', function($routeProvider) {
+
+    {% if not session.logged_in %}
+    $routeProvider.otherwise({redirectTo: '/login'});
+    {% else %}
+    $routeProvider.otherwise({redirectTo: '/friends'});
+    {% endif %}
+
+    }]);
+
+  </script>
+  <script src="static/login/login.js"></script>
+  <script src="static/friends/friends.js"></script>
+</body>
 </html>
