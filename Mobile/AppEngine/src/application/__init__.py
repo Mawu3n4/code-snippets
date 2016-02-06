@@ -1,6 +1,7 @@
 from flask import Flask
+from settings import configuration
 
 app = Flask('application')
+app.config.update(**configuration)
 
 import urls
-import views.facebook_login
