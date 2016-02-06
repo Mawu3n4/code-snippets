@@ -9,3 +9,4 @@ env:
 
 deps:
 	pip install -r requirements.txt
+	npm install

@@ -1,0 +1,11 @@
+{
+  "name": "GAE-Friend-List-APP",
+  "version": "1.0.0",
+  "description": "A simple facebook friend list",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zack--",
+  "devDependencies": {
+  }
+}
