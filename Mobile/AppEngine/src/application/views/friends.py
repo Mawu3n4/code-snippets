@@ -14,7 +14,6 @@ def update_friendlists(user):
     graph = facebook.GraphAPI(user.token)
     profile = graph.get_object("me")
     friends = graph.get_connections("me", "friends")
-
     for friend in friends['data']:
         entry = User.get_or_insert(
             friend['id'].decode('utf-8'),
@@ -38,6 +37,9 @@ class FriendsWebhook(MethodView):
     def post(self):
         data = request.get_json(silent=True, force=True)
 
+        if not data:
+            return Response(status=400)
+
         # Only one permission is hooked
         entry = data['entry'][0]
 
@@ -56,7 +58,11 @@ class FriendsView(MethodView):
     def get(self):
         profile_id = request.args.get('profile_id')
         if not profile_id and not session.get('profile_id'):
-            return redirect('/#/login')
+            return Response(
+                'No profile specified. Please specify profile_id',
+                status=400
+            )
+
         profile_id = profile_id or session.get('profile_id')
         user = User.get_by_id(profile_id)
         if not user:
