@@ -1,9 +1,9 @@
 from flask import render_template
 
 from application import app
-
 from views import facebook_login
 from views import friends
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -15,6 +15,7 @@ def page_not_found(e):
 def application_error(e):
     """Return a custom 500 error."""
     return '500, Unexpected error: {}'.format(e), 500
+
 
 @app.route("/")
 def index():
