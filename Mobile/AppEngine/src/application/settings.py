@@ -1,3 +1,8 @@
+"""
+.. module:: application.settings
+    :synopsis: Provides the app configuration
+"""
+
 
 configuration = {
     'FACEBOOK_APP_ID': '',

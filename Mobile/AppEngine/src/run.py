@@ -1,3 +1,8 @@
+"""
+.. module:: run
+    :synopsis: Provides a runner for the application
+"""
+
 import os
 import sys
 

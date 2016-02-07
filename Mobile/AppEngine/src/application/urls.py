@@ -1,3 +1,8 @@
+"""
+.. module:: application.urls
+    :synopsis: Provides the routes of the application
+"""
+
 from flask import render_template
 
 from application import app

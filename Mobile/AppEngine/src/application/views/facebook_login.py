@@ -1,3 +1,8 @@
+"""
+.. module:: application.settings
+    :synopsis: Provides views for the facebook authentication
+"""
+
 
 from flask import url_for, request, session, redirect
 from flask_oauth import OAuth
@@ -63,14 +68,16 @@ def facebook_authorized(resp):
     session['logged_in'] = True
     session['facebook_token'] = (resp['access_token'], '')
 
+    # Make use of the connection to retrieves the user's info
     profile = facebook.get('/me').data
     profile_id = profile['id'].decode('utf-8')
     user_entry = ndb.Key('User', profile_id).get()
+
     if not user_entry:
         friends = facebook.get('/me/friends').data
         add_user(profile, friends)
 
-    # Add new token
+    # Add new token to the user entry
     user = User.get_by_id(profile_id)
     user.token = resp['access_token']
     user.put()

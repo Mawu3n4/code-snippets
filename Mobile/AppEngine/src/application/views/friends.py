@@ -1,10 +1,15 @@
+"""
+.. module:: application.settings
+    :synopsis: Provides views for /api/friends and the facebook webhook
+"""
+
+
 import json
 
 import facebook
-from flask import request, Response, session, redirect
+from flask import request, Response, session
 from flask.views import MethodView
 from google.appengine.ext import ndb
-from google.appengine.api import users
 
 from application import app
 from application.models import User

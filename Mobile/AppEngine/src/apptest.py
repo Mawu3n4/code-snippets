@@ -1,3 +1,8 @@
+"""
+.. module:: apptest
+    :synopsis: Provides a test runner for the application
+"""
+
 import os
 import sys
 import unittest2
