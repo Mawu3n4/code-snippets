@@ -7,10 +7,13 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="static/css/app.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 </head>
 <body>
 
-  <div ng-view></div>
+  <div class="container">
+    <div ng-view></div>
+  </div>
 
   <script src="static/bower_components/angular/angular.js"></script>
   <script src="static/bower_components/angular-route/angular-route.js"></script>
@@ -18,16 +21,16 @@
 
     // Declare app level module which depends on views, and components
     angular.module('myApp', [
-    'ngRoute',
-    'myApp.login',
-    'myApp.friends'
+      'ngRoute',
+      'myApp.login',
+      'myApp.friends'
     ]).
     config(['$routeProvider', function($routeProvider) {
 
     {% if not session.logged_in %}
-    $routeProvider.otherwise({redirectTo: '/login'});
+        $routeProvider.otherwise({redirectTo: '/login'});
     {% else %}
-    $routeProvider.otherwise({redirectTo: '/friends'});
+        $routeProvider.otherwise({redirectTo: '/friends'});
     {% endif %}
 
     }]);
@@ -35,5 +38,6 @@
   </script>
   <script src="static/login/login.js"></script>
   <script src="static/friends/friends.js"></script>
+  <script src="static/js/facebookService.js"></script>
 </body>
 </html>

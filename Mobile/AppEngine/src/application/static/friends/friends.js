@@ -9,14 +9,13 @@ angular.module('myApp.friends', ['ngRoute'])
   });
 }])
 
-.controller('friendsController', ['$scope', '$http', function($scope, $http) {
-  $scope.friends = [];
+.controller('friendsController', ['$scope', 'facebookService', function($scope, facebookService) {
+    $scope.friends = [];
 
-    $http.get('/api/friends').then(function(response){
-        $scope.friends = response.data.friends;
-        console.log(response.data);
-    }, function() {
-        console.log('An error occured while requesting friend list');
-    })
+    facebookService.getFriends().then(function(friends){
+        $scope.friends = friends;
+    }, function(err) {
+        console.log('An error occured while requesting friend list: ' + err);
+    });
 
 }]);
