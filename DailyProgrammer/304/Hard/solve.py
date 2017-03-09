@@ -4,15 +4,23 @@ import numpy
 from PIL import Image
 
 
-def parse_file(filename):
-    """ Format of ITF equations files
+def parse_itf_equation_file(filename):
+    """
+    Format of ITF equations files
     size
     iterations
     A0 B0 C0 D0 E0 F0 p0
     A1 B1 C1 D1 E1 F1 p1
     ...
     An Bn Cn Dn En Fn pn
+
+    Returns:
+      itf_set (np.array): list of itf equations
+      probabilities (list (float)): probabilities for each equations in the set
+      iterations (int): number of iterations
+      size (int): size of the fractal
     """
+
     with open(sys.argv[1], 'r') as fd:
         itf_set = [map(float, line.split(' ')) for line in fd.readlines()]
         size = int(itf_set.pop(0)[0])
@@ -23,7 +31,19 @@ def parse_file(filename):
     return itf_set, probabilities, iterations, size
 
 
-def generate(itf_set, probabilities=None, iterations=5000, size=1):
+def generate_itf_fractal(itf_set, probabilities=None, iterations=5000, size=1):
+    """
+    Argument:
+      itf_set (np.array): equation set
+      probabilities (list (float)): list of probabilities for
+                                    each equation in itf_set
+      iterations (int): number of iterations
+      size (int): size of fractal
+    Return:
+      points (list (tuple)): list of points to plot
+      box (list (float)): rang of points, [minx, maxx, miny, maxy]
+    """
+
     x, y = (1, 1)
     box = [0, 0, 0, 0]
     points = [(x, y)]
@@ -45,10 +65,10 @@ def generate(itf_set, probabilities=None, iterations=5000, size=1):
 
 
 def main():
-    filename = sys.argv[1]
-    itf_set, probabilities, iterations, size = parse_file(filename)
+    fpath = sys.argv[1]
+    itf_set, probabilities, iterations, size = parse_itf_equation_file(fpath)
 
-    points, box = generate(
+    points, box = generate_itf_fractal(
         itf_set,
         probabilities=probabilities,
         iterations=iterations,
@@ -64,8 +84,8 @@ def main():
     print(img.size)
     pixels = img.load()
     for x, y in points:
-        px = origin[0] + x
-        py = origin[1] + y
+        px = x + origin[0]
+        py = y + origin[1]
         pixels[px, py] = (int(px), int(py), 100)
 
     img.show()
